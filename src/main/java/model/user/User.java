@@ -1,5 +1,7 @@
 package model.user;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,6 +10,7 @@ public class User {
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private static final int MIN_PASSWORD_LENGTH = 8;
     String username;
+    @NotBlank(message = "Name cannot be blank")
     String first_name;
     String last_name;
     String email;
@@ -37,7 +40,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
 
     private boolean isValidUsername(String username) {
             return username != null && username.length() > 0;
@@ -89,6 +91,9 @@ public class User {
     }
 
     public void setFirstName(String first_name) {
+        if (!first_name.matches("^[a-zA-Z]+$")) {
+            throw new IllegalArgumentException("First name can only contain letters");
+        }
         this.first_name = first_name;
     }
 

@@ -84,25 +84,32 @@ public class UserTest {
         );
     }
 
-
     //Test Cases for First Name
-//    @Test
-//    public void testValidFirstName() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void testValidFirstName() {
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        underTest.setFirstName("ValidFirstName");
+        assertEquals("ValidFirstName", underTest.getFirstName());
+    }
 
-//    @Test
-//    public void givenInvalidFirstName_whenSetFirstName_thenThrowException() {
-//        // Todo: Implement test
-//    }
+    @Test
+    public void givenInvalidFirstName_whenSetFirstName_thenThrowException() {
+    //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setFirstName("invalidFirstName@#$%^&*()_+")
+        );
+    }
 
-//    @Test(expected = ConstraintViolationException.class)
-//    public void whenFirstNameIsBlank_thenThrowException() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void whenFirstNameIsBlank_thenThrowException() {
+    //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setFirstName("")
+        );
 
-
-
+    }
 
     //Test Cases for Last Name
 //    @Test
