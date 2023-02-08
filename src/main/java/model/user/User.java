@@ -15,6 +15,7 @@ public class User {
     String first_name;
     @NotBlank(message = "Last Name cannot be blank")
     String last_name;
+    @NotBlank(message = "Email cannot be blank")
     String email;
     String password;
 
@@ -30,7 +31,7 @@ public class User {
         if (!isValidLastName(last_name)) {
             throw new IllegalArgumentException("Invalid last name");
         }
-        if (!isValidEmail(email)) {
+        if (!isValidEmail(String.valueOf(email))) {
             throw new IllegalArgumentException("Invalid email");
         }
         if (!isValidPassword(password)) {
@@ -56,10 +57,17 @@ public class User {
     }
 
     private boolean isValidEmail(String email) {
+        if (email == null) {
+            return false;
+        }
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         return  matcher.matches();
     }
+
+//    public boolean checkValidEmail(String email) {
+//        return isValidEmail(email);
+//    }
 
     private boolean isValidPassword(String password) {
         return password != null && password.length() >= MIN_PASSWORD_LENGTH;
@@ -107,6 +115,9 @@ public class User {
     }
 
     public void setEmail(String email) {
+        if (!email.matches(EMAIL_REGEX)) {
+            throw new IllegalArgumentException("Invalid E-Mail Address");
+        }
         this.email = email;
     }
 

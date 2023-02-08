@@ -38,12 +38,12 @@ public class UserTest {
         underTest.setUsername("NewUsername");
         underTest.setFirstName("Jane");
         underTest.setLastName("Doe");
-        underTest.setEmail("");
+        underTest.setEmail("fakeEmail22@gmail.com");
         underTest.setPassword("newPassword");
         assertEquals("NewUsername", underTest.getUsername());
         assertEquals("Jane", underTest.getFirstName());
         assertEquals("Doe", underTest.getLastName());
-        assertEquals("", underTest.getEmail());
+        assertEquals("fakeEmail22@gmail.com", underTest.getEmail());
         assertEquals("newPassword", underTest.getPassword());
     }
 
@@ -161,27 +161,39 @@ public class UserTest {
         );
     }
 
-
-
-
     //Test Cases for Email
-//    @Test
-//    public void testValidEmail() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void testValidEmail() {
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        underTest.setEmail("ValidEmail@GMail.com");
+        assertEquals("ValidEmail@GMail.com", underTest.getEmail());
+    }
 
-//    @Test
-//    public void testInvalidEmail() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void givenInvalidEmail_whenSettingEmail_thenThrowsException() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setEmail("invalidEmail")
+        );
+    }
 
-//    @Test
-//    public void givenInvalidEmail_whenSettingEmail_thenThrowsException() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void whenEmailIsBlank_thenThrowException() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setEmail("")
+        );
+    }
 
-
-
+    @Test
+    public void testInvalidEmailSQLInjection() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setEmail("invalidEmail'; DROP TABLE email;")
+        );
+    }
 
     //Test Cases for Password
 //    @Test
