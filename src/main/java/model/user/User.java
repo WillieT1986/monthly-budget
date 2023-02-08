@@ -9,9 +9,11 @@ public class User {
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private static final int MIN_PASSWORD_LENGTH = 8;
+    @NotBlank(message = "Username cannot be blank")
     String username;
-    @NotBlank(message = "Name cannot be blank")
+    @NotBlank(message = "First Name cannot be blank")
     String first_name;
+    @NotBlank(message = "Last Name cannot be blank")
     String last_name;
     String email;
     String password;
@@ -98,6 +100,9 @@ public class User {
     }
 
     public void setLastName(String last_name) {
+        if (!last_name.matches("^[a-zA-Z]+$")) {
+            throw new IllegalArgumentException("Last name can only contain letters");
+        }
         this.last_name = last_name;
     }
 

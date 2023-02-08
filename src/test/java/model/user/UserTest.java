@@ -84,6 +84,15 @@ public class UserTest {
         );
     }
 
+    @Test
+    public void whenUserNameIsBlank_thenThrowException() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setUsername("")
+        );
+    }
+
     //Test Cases for First Name
     @Test
     public void testValidFirstName() {
@@ -108,26 +117,49 @@ public class UserTest {
         assertThrows(IllegalArgumentException.class, () ->
                 underTest.setFirstName("")
         );
-
     }
 
-    //Test Cases for Last Name
-//    @Test
-//    public void testValidLastName() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void testInvalidFirstNameSQLInjection() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setFirstName("invalidFirstName'; DROP TABLE first_name;")
+        );
+    }
 
-//    @Test
-//    public void givenInvalidLastName_whenSetLastName_thenThrowException() {
-        // Todo: Implement test
-//    }
+    // Test Cases for Last Name
+    @Test
+    public void testValidLastName() {
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        underTest.setLastName("ValidLastName");
+        assertEquals("ValidLastName", underTest.getLastName());
+    }
 
-//    @Test(expected = ConstraintViolationException.class)
-//    public void whenLastNameIsBlank_thenThrowException() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void givenInvalidLastName_whenSetLastName_thenThrowException() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setLastName("invalidLastName@#$%^&*()_+")
+        );
+    }
 
+    @Test
+    public void whenLastNameIsBlank_thenThrowException() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setLastName("")
+        );
+    }
 
+    @Test
+    public void testInvalidLastNameSQLInjection() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setLastName("invalidLastName'; DROP TABLE last_name;")
+        );
+    }
 
 
 
