@@ -11,7 +11,7 @@ public class UserTest {
     private static final String FIRST_NAME = "William";
     private static final String LAST_NAME = "Thompson";
     private static final String EMAIL = "fakeEmail@gmail.com";
-    private static final String PASSWORD = "123456789";
+    private static final String PASSWORD = "ABCDefg1!";
 
     User underTest;
 
@@ -29,22 +29,22 @@ public class UserTest {
     //Test Cases for Getters & Setters
     @Test
     public void testGettersAndSetters() {
-        assertEquals("Will2023", underTest.getUsername());
-        assertEquals("William", underTest.getFirstName());
-        assertEquals("Thompson", underTest.getLastName());
-        assertEquals("fakeEmail@gmail.com", underTest.getEmail());
-        assertEquals("123456789", underTest.getPassword());
+        assertEquals(USERNAME, underTest.getUsername());
+        assertEquals(FIRST_NAME, underTest.getFirstName());
+        assertEquals(LAST_NAME, underTest.getLastName());
+        assertEquals(EMAIL, underTest.getEmail());
+        assertEquals(PASSWORD, underTest.getPassword());
 
         underTest.setUsername("NewUsername");
         underTest.setFirstName("Jane");
         underTest.setLastName("Doe");
         underTest.setEmail("fakeEmail22@gmail.com");
-        underTest.setPassword("newPassword");
+        underTest.setPassword("newPassword1!");
         assertEquals("NewUsername", underTest.getUsername());
         assertEquals("Jane", underTest.getFirstName());
         assertEquals("Doe", underTest.getLastName());
         assertEquals("fakeEmail22@gmail.com", underTest.getEmail());
-        assertEquals("newPassword", underTest.getPassword());
+        assertEquals("newPassword1!", underTest.getPassword());
     }
 
     //Test Cases for User Creation
@@ -196,20 +196,38 @@ public class UserTest {
     }
 
     //Test Cases for Password
-//    @Test
-//    public void testValidPassword() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void testValidatePasswordRequirements() {
+        assertTrue(underTest.checkValidPassword(underTest.password));
+    }
 
-//    @Test
-//    public void testInvalidPassword() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void givenInvalidPassword_whenSettingPassword_thenThrowsException() {
+        //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setPassword("invalidPassword")
+        );
+    }
 
-//    @Test
-//    public void givenInvalidPassword_whenSettingPassword_thenThrowsException() {
-        // Todo: Implement test
-//    }
+    @Test
+    public void whenPasswordIsBlank_thenThrowException() {
+        assertThrows(IllegalArgumentException.class, () ->
+                underTest.setPassword("")
+        );
+    }
+
+    @Test
+    public void testPasswordAgainstSQLInjection() {
+        // The first assertFalse checks if the password is considered invalid by the checkValidPassword method,
+        // which should return false if it contains any malicious SQL statements.
+        String password = "invalidPassword'; DROP TABLE password;";
+        assertFalse(underTest.checkValidPassword(password));
+        // The second assertThrows checks if the setPassword method throws an exception,
+        // which it should do if it detects any malicious SQL statements in the password.
+        assertThrows(IllegalArgumentException.class, () ->
+            underTest.setPassword("invalidPassword'; DROP TABLE password;")
+        );
+    }
 
 
 

@@ -9,6 +9,8 @@ public class User {
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private static final int MIN_PASSWORD_LENGTH = 8;
+    private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}$";
+
     @NotBlank(message = "Username cannot be blank")
     String username;
     @NotBlank(message = "First Name cannot be blank")
@@ -17,6 +19,7 @@ public class User {
     String last_name;
     @NotBlank(message = "Email cannot be blank")
     String email;
+    @NotBlank(message = "Password cannot be blank")
     String password;
 
 
@@ -34,8 +37,11 @@ public class User {
         if (!isValidEmail(String.valueOf(email))) {
             throw new IllegalArgumentException("Invalid email");
         }
-        if (!isValidPassword(password)) {
-            throw new IllegalArgumentException("Invalid password");
+        boolean validatePassword = checkValidPassword(password);
+        if (validatePassword) {
+            if (!isValidPassword(password)) {
+                throw new IllegalArgumentException("Invalid password");
+            }
         }
         this.username = username;
         this.first_name = first_name;
@@ -70,7 +76,11 @@ public class User {
 //    }
 
     private boolean isValidPassword(String password) {
-        return password != null && password.length() >= MIN_PASSWORD_LENGTH;
+        return password != null && password.length() >= MIN_PASSWORD_LENGTH && password.matches(PASSWORD_REGEX);
+    }
+
+    public boolean checkValidPassword(String password) {
+        return isValidPassword(password);
     }
 
     public String getUsername() {
@@ -122,6 +132,9 @@ public class User {
     }
 
     public void setPassword(String password) {
+        if (!isValidPassword(password)) {
+            throw new IllegalArgumentException("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+        }
         this.password = password;
     }
 
