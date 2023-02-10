@@ -23,7 +23,6 @@ public class User {
     String password;
 
 
-
     public User(String username, String first_name, String last_name, String email, String password) {
         if (!isValidUsername(username)) {
             throw new IllegalArgumentException("Invalid username");
@@ -50,18 +49,55 @@ public class User {
         this.password = password;
     }
 
+   // USERNAME
     private boolean isValidUsername(String username) {
             return username != null && username.length() > 0;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        if (!username.matches("^[a-zA-Z0-9]+$")) {
+            throw new IllegalArgumentException("Username can only contain letters and numbers");
+        }
+        this.username = username;
+    }
+
+    // FIRST NAME
     private boolean isValidFirstName(String firstName) {
         return firstName != null && firstName.length() > 0;
     }
 
+    public String getFirstName() {
+        return first_name;
+    }
+
+    public void setFirstName(String first_name) {
+        if (!first_name.matches("^[a-zA-Z]+$")) {
+            throw new IllegalArgumentException("First name can only contain letters");
+        }
+        this.first_name = first_name;
+    }
+
+    // LAST NAME
     private boolean isValidLastName(String lastName) {
         return lastName != null && lastName.length() > 0;
     }
 
+    public String getLastName() {
+        return last_name;
+    }
+
+    public void setLastName(String last_name) {
+        if (!last_name.matches("^[a-zA-Z]+$")) {
+            throw new IllegalArgumentException("Last name can only contain letters");
+        }
+        this.last_name = last_name;
+    }
+
+    // EMAIL
     private boolean isValidEmail(String email) {
         if (email == null) {
             return false;
@@ -75,6 +111,18 @@ public class User {
 //        return isValidEmail(email);
 //    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        if (!email.matches(EMAIL_REGEX)) {
+            throw new IllegalArgumentException("Invalid E-Mail Address");
+        }
+        this.email = email;
+    }
+
+    // PASSWORD
     private boolean isValidPassword(String password) {
         return password != null && password.length() >= MIN_PASSWORD_LENGTH && password.matches(PASSWORD_REGEX);
     }
@@ -83,52 +131,8 @@ public class User {
         return isValidPassword(password);
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getFirstName() {
-        return first_name;
-    }
-
-    public String getLastName() {
-        return last_name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setUsername(String username) {
-        if (!username.matches("^[a-zA-Z0-9]+$")) {
-            throw new IllegalArgumentException("Username can only contain letters and numbers");
-        }
-        this.username = username;
-    }
-
-    public void setFirstName(String first_name) {
-        if (!first_name.matches("^[a-zA-Z]+$")) {
-            throw new IllegalArgumentException("First name can only contain letters");
-        }
-        this.first_name = first_name;
-    }
-
-    public void setLastName(String last_name) {
-        if (!last_name.matches("^[a-zA-Z]+$")) {
-            throw new IllegalArgumentException("Last name can only contain letters");
-        }
-        this.last_name = last_name;
-    }
-
-    public void setEmail(String email) {
-        if (!email.matches(EMAIL_REGEX)) {
-            throw new IllegalArgumentException("Invalid E-Mail Address");
-        }
-        this.email = email;
     }
 
     public void setPassword(String password) {

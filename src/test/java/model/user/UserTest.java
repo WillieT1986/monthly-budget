@@ -63,7 +63,6 @@ public class UserTest {
     //Test Cases for UserName
     @Test
     public void testValidUserName() {
-        underTest = new User("ValidUsername12", FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         underTest.setUsername("ValidUsername125");
         assertEquals("ValidUsername125", underTest.getUsername());
     }
@@ -87,7 +86,6 @@ public class UserTest {
     @Test
     public void whenUserNameIsBlank_thenThrowException() {
         //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () ->
                 underTest.setUsername("")
         );
@@ -96,7 +94,6 @@ public class UserTest {
     //Test Cases for First Name
     @Test
     public void testValidFirstName() {
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         underTest.setFirstName("ValidFirstName");
         assertEquals("ValidFirstName", underTest.getFirstName());
     }
@@ -104,7 +101,6 @@ public class UserTest {
     @Test
     public void givenInvalidFirstName_whenSetFirstName_thenThrowException() {
     //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () ->
                 underTest.setFirstName("invalidFirstName@#$%^&*()_+")
         );
@@ -113,7 +109,6 @@ public class UserTest {
     @Test
     public void whenFirstNameIsBlank_thenThrowException() {
     //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () ->
                 underTest.setFirstName("")
         );
@@ -130,7 +125,6 @@ public class UserTest {
     // Test Cases for Last Name
     @Test
     public void testValidLastName() {
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         underTest.setLastName("ValidLastName");
         assertEquals("ValidLastName", underTest.getLastName());
     }
@@ -138,7 +132,6 @@ public class UserTest {
     @Test
     public void givenInvalidLastName_whenSetLastName_thenThrowException() {
         //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () ->
                 underTest.setLastName("invalidLastName@#$%^&*()_+")
         );
@@ -147,7 +140,6 @@ public class UserTest {
     @Test
     public void whenLastNameIsBlank_thenThrowException() {
         //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () ->
                 underTest.setLastName("")
         );
@@ -164,7 +156,6 @@ public class UserTest {
     //Test Cases for Email
     @Test
     public void testValidEmail() {
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         underTest.setEmail("ValidEmail@GMail.com");
         assertEquals("ValidEmail@GMail.com", underTest.getEmail());
     }
@@ -172,7 +163,6 @@ public class UserTest {
     @Test
     public void givenInvalidEmail_whenSettingEmail_thenThrowsException() {
         //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () ->
                 underTest.setEmail("invalidEmail")
         );
@@ -181,7 +171,6 @@ public class UserTest {
     @Test
     public void whenEmailIsBlank_thenThrowException() {
         //  If an error, specifically an "IllegalArgumentException", is not thrown, then the test case fails.
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () ->
                 underTest.setEmail("")
         );
