@@ -3,6 +3,9 @@ package model.user;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
@@ -17,7 +20,7 @@ public class UserTest {
 
     @BeforeEach
     public void setUp() {
-        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, new ArrayList<>());
     }
 
     //Test Cases for Instantiation of the User Class.
@@ -56,7 +59,7 @@ public class UserTest {
     @Test
     public void givenInvalidUserDetails_whenCreatingUser_thenThrowsException() {
        assertThrows(IllegalArgumentException.class, () ->
-               underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, "invalid_email", PASSWORD)
+               underTest = new User(USERNAME, FIRST_NAME, LAST_NAME, "invalid_email", PASSWORD, new ArrayList<>())
        );
     }
 
@@ -218,20 +221,36 @@ public class UserTest {
         );
     }
 
+    // Test cases to verify that each username is unique and not equal to another user's username.
+    // Ensures no duplicates and correct username assignment.
+    @Test
+    public void testUsernameUniqueness() {
+        List<String> existingUsernames = new ArrayList<>();
 
+        User user1 = new User("uniqueUsername1", "John", "Doe", "johndoe@email.com", "password123", existingUsernames);
+        User user2 = new User("uniqueUsername2", "Jane", "Doe", "janedoe@email.com", "password456", existingUsernames);
 
+        // Ensure the first user is created successfully
+        assertNotNull(user1);
 
+        // Attempt to create the second user with a different username
+        assertNotNull(user2);
 
+        // Now attempt to create a third user with the same username as the first user
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                new User("uniqueUsername1", "Another", "User", "anotheruser@email.com", "password789", existingUsernames)
+        );
 
-    //Test Cases for Equality
-//    @Test
-//    public void testEquality() {
-        //Todo: Implement test
-//    }
+        // Verify that an exception is thrown, indicating that the username is already taken
+        assertEquals("Username already exists", exception.getMessage());
+    }
 
-
-
-
+    @Test
+    public void testUserInequality() {
+        User user1 = new User("uniqueUsername1", "John", "Doe", "email1@gmail.com", "passWORD1!", new ArrayList<>());
+        User user2 = new User("uniqueUsername2", "John2", "Doe2", "email2@gmail.com", "passWORD2!", new ArrayList<>());
+        assertNotEquals(user1, user2);
+    }
 
     //Test Cases for toString
 //    @Test

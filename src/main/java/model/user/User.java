@@ -2,6 +2,8 @@ package model.user;
 
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,10 +24,14 @@ public class User {
     @NotBlank(message = "Password cannot be blank")
     String password;
 
+    private static final List<String> existingUsernames = new ArrayList<>();
 
-    public User(String username, String first_name, String last_name, String email, String password) {
+    public User(String username, String first_name, String last_name, String email, String password, List<String> existingUsernames) {
         if (!isValidUsername(username)) {
             throw new IllegalArgumentException("Invalid username");
+        }
+        if (existingUsernames.contains(username)) {
+            throw new IllegalArgumentException("Username already exists");
         }
         if (!isValidFirstName(first_name)) {
             throw new IllegalArgumentException("Invalid first name");
@@ -43,6 +49,7 @@ public class User {
             }
         }
         this.username = username;
+        existingUsernames.add(username);
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -62,7 +69,11 @@ public class User {
         if (!username.matches("^[a-zA-Z0-9]+$")) {
             throw new IllegalArgumentException("Username can only contain letters and numbers");
         }
+        if (existingUsernames.contains(username)) {
+            throw new IllegalArgumentException("Username already exists");
+        }
         this.username = username;
+        existingUsernames.add(username);
     }
 
     // FIRST NAME
