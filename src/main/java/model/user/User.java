@@ -1,18 +1,27 @@
 package model.user;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Entity
+@Table(name = "users")
 public class User {
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private static final int MIN_PASSWORD_LENGTH = 8;
     private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}$";
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SuppressWarnings("unused")
+    private long id;
     @NotBlank(message = "Username cannot be blank")
     String username;
     @NotBlank(message = "First Name cannot be blank")
@@ -26,6 +35,8 @@ public class User {
 
     private static final List<String> existingUsernames = new ArrayList<>();
 
+    public User() {
+    }
     public User(String username, String first_name, String last_name, String email, String password, List<String> existingUsernames) {
         if (!isValidUsername(username)) {
             throw new IllegalArgumentException("Invalid username");
@@ -56,7 +67,12 @@ public class User {
         this.password = password;
     }
 
-   // USERNAME
+    // ID
+    public long getId() {
+        return id;
+    }
+
+    // USERNAME
     private boolean isValidUsername(String username) {
             return username != null && username.length() > 0;
     }
@@ -153,4 +169,37 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        return id == user.id &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(first_name, user.first_name) &&
+                Objects.equals(last_name, user.last_name) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return ((Long) id).hashCode();
+    }
+
+    @Override
+    public String toString( ) {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + first_name + '\'' +
+                ", lastName='" + last_name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
