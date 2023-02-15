@@ -187,6 +187,11 @@ public class UserTest {
         );
     }
 
+    @Test
+    public void testValidateEmailRequirements() {
+        assertTrue(underTest.checkValidEmail(underTest.email));
+    }
+
     //Test Cases for Password
     @Test
     public void testValidatePasswordRequirements() {

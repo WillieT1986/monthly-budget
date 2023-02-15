@@ -134,9 +134,9 @@ public class User {
         return  matcher.matches();
     }
 
-//    public boolean checkValidEmail(String email) {
-//        return isValidEmail(email);
-//    }
+    public boolean checkValidEmail(String email) {
+        return isValidEmail(email);
+    }
 
     public String getEmail() {
         return email;
