@@ -1,6 +1,7 @@
 package model.user;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 
@@ -23,14 +24,20 @@ public class User {
     @SuppressWarnings("unused")
     private long id;
     @NotBlank(message = "Username cannot be blank")
+    @Column(nullable = false, length = 45)
     String username;
     @NotBlank(message = "First Name cannot be blank")
+    @Column(nullable = false, length = 20)
     String first_name;
     @NotBlank(message = "Last Name cannot be blank")
+    @Column(nullable = false, length = 20)
     String last_name;
     @NotBlank(message = "Email cannot be blank")
+    @Email
+    @Column(nullable = false, unique = true, length = 45)
     String email;
     @NotBlank(message = "Password cannot be blank")
+    @Column(nullable = false, length = 24)
     String password;
 
     private static final List<String> existingUsernames = new ArrayList<>();
@@ -70,6 +77,10 @@ public class User {
     // ID
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     // USERNAME
