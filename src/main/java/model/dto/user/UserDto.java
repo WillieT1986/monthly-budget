@@ -11,6 +11,16 @@ public final class UserDto {
     private final String lastName;
     private final String email;
 
+    // This constructor is used to create a new UserDto object from an existing UserDto object.
+    public UserDto(UserDto other) {
+        this.id = other.id;
+        this.username = other.username;
+        this.firstName = other.firstName;
+        this.lastName = other.lastName;
+        this.email = other.email;
+    }
+
+
     public UserDto(Long id, String username, String firstName, String lastName, String email) {
         this.id = Objects.requireNonNull(id, "id must not be null");
         this.username = Objects.requireNonNull(username, "username must not be null");

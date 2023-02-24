@@ -95,6 +95,13 @@ public class UserDtoTest {
         assertThrows(NullPointerException.class, () -> new UserDto(1L, "username", "first", "last", null));
     }
 
+    @Test
+    public void testCopyConstructor() {
+        UserDto originalDto = new UserDto(1L, "johndoe", "John", "Doe", "johndoe@email.com");
+        UserDto copiedDto = new UserDto(originalDto);
 
+        assertEquals(originalDto, copiedDto);
+        assertNotSame(originalDto, copiedDto);
+    }
 
 }
