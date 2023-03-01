@@ -65,12 +65,15 @@ public class UserDtoTest {
 
     @Test
     public void testToString_NullValues() {
-        // With the addition of the UserDto constructor for testing Immutability,
-        // this test is no longer valid.
+        /*
+         With the addition of the UserDto constructor for testing Immutability,
+         this test is no longer valid.
 
-        // UserDto dto = new UserDto(null, null, null, null, null);
-        // String expected = "UserDto{id=null, username='null', firstName='null', lastName='null', email='null'}";
-        // assertEquals(expected, dto.toString());
+         UserDto dto = new UserDto(null, null, null, null, null);
+         String expected = "UserDto{id=null, username='null', firstName='null', lastName='null', email='null'}";
+         assertEquals(expected, dto.toString());
+        */
+
     }
 
     @Test
